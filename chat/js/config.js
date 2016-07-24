@@ -11,7 +11,7 @@ var ajaxChatConfig = {
 	loginChannelName: null,
 
 	// The time in ms between update calls to retrieve new chat messages:
-	timerRate: 2000,
+	timerRate: 10000,
 
 	// The URL to retrieve the XML chat messages (must at least contain one parameter):
 	ajaxURL: './?ajax=true',
@@ -86,7 +86,7 @@ var ajaxChatConfig = {
 		// Defines if sounds are played:
 		audio: true,
 		// Defines the sound volume (0.0 = mute, 1.0 = max):
-		audioVolume: 1.0,
+		audioVolume: 0.2,
 
 		// Defines the sound that is played when normal messages are reveived:
 		soundReceive: 'sound_1',
@@ -239,7 +239,7 @@ var ajaxChatConfig = {
 	// UserID plus this value are used for private messages:
 	privateMessageDiff: 1000000000,
 	// Defines if login/logout and channel enter/leave are displayed:
-	showChannelMessages: true,
+	showChannelMessages: false,
 	// Max messageText length:
 	messageTextMaxLength: 1040,
 	// Defines if the socket server is enabled:

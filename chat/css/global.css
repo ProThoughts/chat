@@ -314,8 +314,10 @@ body.ajax-chat {
 	#content #mainPanelContainer { top:65px; left:0px; right:0px; bottom:105px; }
 	#content #onlineListContainer, #content #helpContainer, #content #settingsContainer { border-right-width:0; position:absolute; width:auto; top:0px; right:0px; bottom:0px; left:0px; }
 	#content #chatList { border-left-width: 0; border-right-width: 0; }
-	#content #bbCodeContainer #bbCodeIMG, #content #bbCodeContainer #bbCodeURL { display:none; }
+/*	#content #bbCodeContainer #bbCodeIMG, #content #bbCodeContainer #bbCodeURL { display:none; } for Q2A*/
+	#content #bbCodeContainer #bbCodeColor, #colorCodesContainer, #content #bbCodeContainer #bbCodeBold, #content #bbCodeContainer #bbCodeItalic, #content #bbCodeContainer #bbCodeUnderline { display:none!important; } /*for Q2A*/
 	#content #bbCodeContainer { padding:0; }
+	#content #bbCodeContainer input { font-size:small; }/*for Q2A*/
 	#content #emoticonsContainer { bottom:80px; left:5px; }
 	#content #logoutChannelInner { display:none; clear:left; padding:5px; text-align:right; }
 	#content #logoutChannelContainer #showChannelsButton { display:block; position:absolute; right:5px; top:5px; }

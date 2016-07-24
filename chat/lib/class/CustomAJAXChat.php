@@ -86,7 +86,9 @@ class CustomAJAXChat extends AJAXChat {
 			if($this->getUserRole() == AJAX_CHAT_GUEST) {
 				$validChannels = $customUsers[0]['channels'];
 			} else {
-				$validChannels = $customUsers[$this->getUserID()]['channels'];
+				$channelIDs = $this->getCustomChannelsId();	
+				//$validChannels = $customUsers[$this->getUserID()]['channels']; //for Q2A
+				$validChannels = $channelIDs;
 			}
 
 			// Add the valid channels to the channel list (the defaultChannelID is always valid):
@@ -137,21 +139,65 @@ class CustomAJAXChat extends AJAXChat {
 		}
 		return $this->_allChannels;
 	}
+	/*
+	   function &getCustomUsers() {
+// List containing the registered chat users:
+$users = null;
+$channelIDs = $this->getCustomChannelsId();
+require(AJAX_CHAT_PATH.'lib/data/users.php');
+$userscount = count($users);
+//users from q2a
+$usersfromq2a = qa_db_select_with_pending(qa_db_top_users_selectspec(0));
+foreach ($usersfromq2a as $key => $value) {
+$users[$key] = array();
+$users[$key]['userRole'] = AJAX_CHAT_USER;
+$users[$key]['userName'] = 'user';
+$users[$key]['password'] = time().mt_rand();
+$users[$key]['channels'] = $channelIDs;
+}
+return $users;
+}*/
 
-	function &getCustomUsers() {
-		// List containing the registered chat users:
-		$users = null;
-		require(AJAX_CHAT_PATH.'lib/data/users.php');
-		return $users;
+
+function &getCustomUsers() {
+	// List containing the registered chat users:
+	$users = null;
+	require(AJAX_CHAT_PATH.'lib/data/users.php');
+	return $users;
+}
+//for Q2A
+function getCustomChannels() {
+	// List containing the custom channels:
+	$channels = array();
+	//$channels = getCustomChannelsId();
+	//Q2A Categories list
+	$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
+	foreach ($q2a_categories as $catID => $catDet) {
+		$channels[$catID] = $catDet["tags"];
 	}
 
-	function getCustomChannels() {
-		// List containing the custom channels:
-		$channels = null;
-		require(AJAX_CHAT_PATH.'lib/data/channels.php');
-		// Channel array structure should be:
-		// ChannelName => ChannelID
-		return array_flip($channels);
+	// ChannelName => ChannelID
+	return array_flip($channels);
+}
+
+function getCustomChannelsId() {
+	// List containing the custom channels:
+	$channels = array();
+	$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
+	foreach ($q2a_categories as $catID => $catDet) {
+		$channels[] = $catID;
 	}
+	// Channel array structure should be:
+	// ChannelName => ChannelID
+	return $channels;
+}
+/*	function getCustomChannels() {
+// List containing the custom channels:
+$channels = null;
+require(AJAX_CHAT_PATH.'lib/data/channels.php');
+// Channel array structure should be:
+// ChannelName => ChannelID
+return array_flip($channels);
+}*/
 
 }

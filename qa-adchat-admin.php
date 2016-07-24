@@ -9,8 +9,6 @@
 		function option_default($option) {
 
 			switch($option) {
-				case 'adchat_plugin_widget_title':
-					return 'Chat';
 				case 'adchat_plugin_css':
 					return '
 button#adchattoggle {
@@ -32,7 +30,6 @@ button#adchattoggle {
 				
 				qa_opt('adchat_plugin_css',qa_post_text('adchat_plugin_css'));
 				qa_opt('adchat_plugin_widget_only',(bool)qa_post_text('adchat_plugin_widget_only'));
-				qa_opt('adchat_plugin_widget_title',qa_post_text('adchat_plugin_widget_title'));
 				
 				
 				$ok = qa_lang('admin/options_saved');
@@ -62,11 +59,6 @@ button#adchattoggle {
 				'rows' => 20
 			);
 									
-			$fields[] = array(
-				'label' => 'Widget Title',
-				'tags' => 'NAME="adchat_plugin_widget_title"',
-				'value' => qa_opt('adchat_plugin_widget_title'),
-			);
 
 			$fields[] = array(
 				'type' => 'blank',

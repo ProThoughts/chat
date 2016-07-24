@@ -22,11 +22,6 @@ class qa_adchat_widget {
 
 	function output_widget($region, $place, $themeobject, $template, $request, $qa_content)
 	{
-		/*$themeobject->output(
-		  '<H3 STYLE="margin-top:0; padding-top:0;">',
-		  qa_opt('adchat_plugin_widget_title'),
-		  '</H3>'
-		  );*/
 		$out='';
 		require_once QA_INCLUDE_DIR.'qa-app-users.php';
 		if(qa_is_logged_in())
@@ -34,8 +29,16 @@ class qa_adchat_widget {
 			$out='
 
 
-			<button id="adchattoggle" class="adchattoggle btn btn-info btn-lg btn-block">Show/Hide Chat </button>
-			<div class="adchat" id="adchat">
+			<button id="adchattoggle" class="adchattoggle btn btn-info btn-lg btn-block">Show/Hide Chat </button>';
+			$out.='<div class="adchat" id="adchat" style="display:';
+			 if(@$_COOKIE['showadchat'] == 'block')
+				$out.="block";
+			else $out.="none";
+
+
+
+			$out .='">';
+			$out.='
 	
 				<iframe src="'.$this->urltoroot.'/chat" style="border:0; width:100%; height:480px;"></iframe>
 				 </div>';
