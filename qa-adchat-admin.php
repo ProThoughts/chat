@@ -10,7 +10,7 @@
 
 			switch($option) {
 				case 'adchat_plugin_widget_title':
-					return 'Previous questions';
+					return 'Chat';
 				case 'adchat_plugin_css':
 					return '#qa-adchat-buttons-container {
 	background: none repeat scroll 0 0 #DDDDDD;
@@ -28,6 +28,12 @@
 			}
 			
 		}
+		function init_queries($tableslc)
+		{
+			
+		}
+
+
 
 		function admin_form(&$qa_content)
 		{
@@ -62,7 +68,7 @@
 			);			
 			
 			$fields[] = array(
-				'label' => 'PrevNav buttons custom css',
+				'label' => 'Adchat custom css',
 				'tags' => 'NAME="adchat_plugin_css"',
 				'value' => qa_opt('adchat_plugin_css'),
 				'type' => 'textarea',
