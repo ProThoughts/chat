@@ -12,24 +12,11 @@
 				case 'adchat_plugin_widget_title':
 					return 'Chat';
 				case 'adchat_plugin_css':
-					return '#qa-adchat-buttons-container {
-	background: none repeat scroll 0 0 #DDDDDD;
-	font-size: 125%;
-	font-weight: bold;
-	margin: 20px 0;
-	padding: 20px;
-	text-align: center;
-
-}
-.adchat-widget-container {
-	display:inline-block;
-	position:relative;
+					return '
+button#adchattoggle {
+	margin-bottom: 10px;
 }';
 			}
-			
-		}
-		function init_queries($tableslc)
-		{
 			
 		}
 

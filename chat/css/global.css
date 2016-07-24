@@ -292,26 +292,26 @@ body.ajax-chat {
 }
 
 @media (max-width: 700px) {
-	#content #mainPanelContainer { top:65px; left:5px; right:5px; bottom:105px;}
+	#content #mainPanelContainer { top:65px; left:5px; right:5px; bottom:105px; }
 	#content #headline { margin:0; padding:0 0 0 5px; line-height:25px; }
 	#content #statusIconContainer { top:2px; right:2px; }
-	#content #copyright { top:0px; right:30px; line-height: 25px;display:none;}
+	#content #copyright { top:0px; right:30px; line-height: 25px;}
 	#content #logoutChannelContainer { top:30px; left:5px; right:0px; }
 	#content #logoutChannelContainer label { display:none; }
 	#content #emoticonsContainer, #content #submitButtonContainer { display:none; }
-	#content #bbCodeContainer { bottom:45px; left:5px; padding-top:20px; }
+	#content #bbCodeContainer { bottom:45px; left:5px; padding:0; }
 	#content #bbCodeContainer #bbCodeEmoticon { display:block; }
 	#content #bbCodeContainer #bbCodeQuote, #content #bbCodeContainer #bbCodeCode { display:none; }
 	#content #optionsContainer { bottom:10px; right:5px; }
 	#content #chatList { left:5px; right:150px; bottom:115px; font-size:12px; }
 	#content #inputFieldContainer #inputField { height:20px; }
-	#content #inputFieldContainer { left:5px; right:5px; bottom:75px;padding-top:10px;padding-bottom:60px; }
+	#content #inputFieldContainer { left:5px; right:5px; bottom:75px; }
 	#content #colorCodesContainer, #content #emoticonsContainer { bottom:85px; left:5px; }
 	#content #onlineListContainer, #content #helpContainer, #content #settingsContainer { margin-left:0; border-left-width:0; }
 }
 
 @media (max-width: 480px) {
-	#content #mainPanelContainer { top:65px; left:0px; right:0px; bottom:125px; padding-bottom:60px; }
+	#content #mainPanelContainer { top:65px; left:0px; right:0px; bottom:105px; }
 	#content #onlineListContainer, #content #helpContainer, #content #settingsContainer { border-right-width:0; position:absolute; width:auto; top:0px; right:0px; bottom:0px; left:0px; }
 	#content #chatList { border-left-width: 0; border-right-width: 0; }
 	#content #bbCodeContainer #bbCodeIMG, #content #bbCodeContainer #bbCodeURL { display:none; }

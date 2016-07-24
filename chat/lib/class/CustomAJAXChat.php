@@ -8,88 +8,87 @@
  */
 
 class CustomAJAXChat extends AJAXChat {
-// Returns an associative array containing userName, userID and userRole
-// Returns null if login is invalid
 
-// Initialize custom request variables: 
-function initCustomRequestVars() { 
-// Auto-login Q2A users: 
-if(!$this->getRequestVar('logout') && !(qa_get_logged_in_userid()===null)) { 
-$this->setRequestVar('login', true); 
-} 
-}
-
-
-
-function getValidLoginUserData() {
-
-// Check if we have a valid registered user:
-if(!(qa_get_logged_in_userid()===null)) {
-$userData = array();
-$userData['userID'] = qa_get_logged_in_userid();
-$userData['userName'] = $this->trimUserName(qa_get_logged_in_handle());
-
-if(qa_get_logged_in_level() == QA_USER_LEVEL_SUPER || qa_get_logged_in_level() == QA_USER_LEVEL_ADMIN)
-$userData['userRole'] = AJAX_CHAT_ADMIN;
-elseif(qa_get_logged_in_level() == QA_USER_LEVEL_MODERATOR)
-$userData['userRole'] = AJAX_CHAT_MODERATOR;
-else
-$userData['userRole'] = AJAX_CHAT_USER;
-
-return $userData;
-
-} else {
-// Guest users:
-return $this->getGuestUser();
-}
-}
-	/* Returns an associative array containing userName, userID and userRole
+	// Returns an associative array containing userName, userID and userRole
 	// Returns null if login is invalid
+
+	/*function getValidLoginUserData() {
+
+	  $customUsers = $this->getCustomUsers();
+
+	  if($this->getRequestVar('password')) {
+	// Check if we have a valid registered user:
+
+	$userName = $this->getRequestVar('userName');
+	$userName = $this->convertEncoding($userName, $this->getConfig('contentEncoding'), $this->getConfig('sourceEncoding'));
+
+	$password = $this->getRequestVar('password');
+	$password = $this->convertEncoding($password, $this->getConfig('contentEncoding'), $this->getConfig('sourceEncoding'));
+
+	foreach($customUsers as $key=>$value) {
+	if(($value['userName'] == $userName) && ($value['password'] == $password)) {
+	$userData = array();
+	$userData['userID'] = $key;
+	$userData['userName'] = $this->trimUserName($value['userName']);
+	$userData['userRole'] = $value['userRole'];
+	return $userData;
+	}
+	}
+
+	return null;
+	} else {
+	// Guest users:
+	return $this->getGuestUser();
+	}
+	}*/
+	//For Q2A
 	function getValidLoginUserData() {
-		
-		$customUsers = $this->getCustomUsers();
-		
-		if($this->getRequestVar('password')) {
-			// Check if we have a valid registered user:
 
-			$userName = $this->getRequestVar('userName');
-			$userName = $this->convertEncoding($userName, $this->getConfig('contentEncoding'), $this->getConfig('sourceEncoding'));
+		// Check if we have a valid registered user:
+		if(!(qa_get_logged_in_userid()===null)) {
+			$userData = array();
+			$userData['userID'] = qa_get_logged_in_userid();
+			$userData['userName'] = $this->trimUserName(qa_get_logged_in_handle());
 
-			$password = $this->getRequestVar('password');
-			$password = $this->convertEncoding($password, $this->getConfig('contentEncoding'), $this->getConfig('sourceEncoding'));
+			if(qa_get_logged_in_level() == QA_USER_LEVEL_SUPER || qa_get_logged_in_level() == QA_USER_LEVEL_ADMIN || qa_get_logged_in_level() == QA_USER_LEVEL_MODERATOR)
+				$userData['userRole'] = AJAX_CHAT_ADMIN;
+			elseif(qa_get_logged_in_level() == QA_USER_LEVEL_EDITOR)
+				$userData['userRole'] = AJAX_CHAT_MODERATOR;
+			else
+				$userData['userRole'] = AJAX_CHAT_USER;
 
-			foreach($customUsers as $key=>$value) {
-				if(($value['userName'] == $userName) && ($value['password'] == $password)) {
-					$userData = array();
-					$userData['userID'] = $key;
-					$userData['userName'] = $this->trimUserName($value['userName']);
-					$userData['userRole'] = $value['userRole'];
-					return $userData;
-				}
-			}
-			
-			return null;
+			return $userData;
+
 		} else {
 			// Guest users:
 			return $this->getGuestUser();
 		}
-	}*/
+	}
+
+	//for Q2A login to work
+	// Initialize custom request variables: 
+	function initCustomRequestVars() { 
+		// Auto-login Q2A users: 
+		if(!$this->getRequestVar('logout') && !(qa_get_logged_in_userid()===null)) { 
+			$this->setRequestVar('login', true); 
+		} 
+	}
 
 	// Store the channels the current user has access to
 	// Make sure channel names don't contain any whitespace
 	function &getChannels() {
 		if($this->_channels === null) {
 			$this->_channels = array();
-			
+
 			$customUsers = $this->getCustomUsers();
-			
+
 			// Get the channels, the user has access to:
 			if($this->getUserRole() == AJAX_CHAT_GUEST) {
 				$validChannels = $customUsers[0]['channels'];
 			} else {
 				$validChannels = $customUsers[$this->getUserID()]['channels'];
 			}
-			
+
 			// Add the valid channels to the channel list (the defaultChannelID is always valid):
 			foreach($this->getAllChannels() as $key=>$value) {
 				if ($value == $this->getConfig('defaultChannelID')) {
@@ -100,7 +99,7 @@ return $this->getGuestUser();
 				if($this->getConfig('limitChannelList') && !in_array($value, $this->getConfig('limitChannelList'))) {
 					continue;
 				}
-				if(($validChannels !== NULL) && (in_array($value, $validChannels))) {
+				if(in_array($value, $validChannels)) {
 					$this->_channels[$key] = $value;
 				}
 			}
@@ -114,26 +113,26 @@ return $this->getGuestUser();
 		if($this->_allChannels === null) {
 			// Get all existing channels:
 			$customChannels = $this->getCustomChannels();
-			
+
 			$defaultChannelFound = false;
-			
+
 			foreach($customChannels as $name=>$id) {
 				$this->_allChannels[$this->trimChannelName($name)] = $id;
 				if($id == $this->getConfig('defaultChannelID')) {
 					$defaultChannelFound = true;
 				}
 			}
-			
+
 			if(!$defaultChannelFound) {
 				// Add the default channel as first array element to the channel list
 				// First remove it in case it appeard under a different ID
 				unset($this->_allChannels[$this->getConfig('defaultChannelName')]);
 				$this->_allChannels = array_merge(
-					array(
-						$this->trimChannelName($this->getConfig('defaultChannelName'))=>$this->getConfig('defaultChannelID')
-					),
-					$this->_allChannels
-				);
+						array(
+							$this->trimChannelName($this->getConfig('defaultChannelName'))=>$this->getConfig('defaultChannelID')
+						     ),
+						$this->_allChannels
+						);
 			}
 		}
 		return $this->_allChannels;
@@ -145,7 +144,7 @@ return $this->getGuestUser();
 		require(AJAX_CHAT_PATH.'lib/data/users.php');
 		return $users;
 	}
-	
+
 	function getCustomChannels() {
 		// List containing the custom channels:
 		$channels = null;

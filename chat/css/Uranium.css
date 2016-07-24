@@ -17,8 +17,7 @@ input, select, textarea, #content #chatList, #content #onlineListContainer, #con
 }
 #content #inputFieldContainer{
 	background:#0E0E0E;
-/*	padding:0;
-	padding-bottom:20px;*/
+	padding:0;
 }
 #content #inputFieldContainer #inputField{
 	box-shadow: inset 1px 1px 5px 1px #000;

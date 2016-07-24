@@ -31,9 +31,14 @@ class qa_adchat_widget {
 		require_once QA_INCLUDE_DIR.'qa-app-users.php';
 		if(qa_is_logged_in())
 		{
-			$out='<div class="chat">
+			$out='
+
+
+			<button id="adchattoggle" class="adchattoggle btn btn-info btn-lg btn-block">Show/Hide Chat </button>
+			<div class="adchat" id="adchat">
+	
 				<iframe src="'.$this->urltoroot.'/chat" style="border:0; width:100%; height:480px;"></iframe>
-				</div>';
+				 </div>';
 
 		}
 		else {

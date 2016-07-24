@@ -21,7 +21,7 @@
 	
 	qa_register_plugin_layer('qa-adchat-layer.php', 'Adchat Layer');	
 	
-qa_register_plugin_module('module', 'qa-adchat-admin.php', 'qa_adchat_admin', 'AdChat Admin');
+	qa_register_plugin_module('module', 'qa-adchat-admin.php', 'qa_adchat_admin', 'AdChat Admin');
 	qa_register_plugin_module('widget', 'qa-adchat-widget.php', 'qa_adchat_widget', 'AdChat Widget');
 
 /*

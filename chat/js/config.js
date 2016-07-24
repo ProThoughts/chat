@@ -11,7 +11,7 @@ var ajaxChatConfig = {
 	loginChannelName: null,
 
 	// The time in ms between update calls to retrieve new chat messages:
-	timerRate: 4000,
+	timerRate: 2000,
 
 	// The URL to retrieve the XML chat messages (must at least contain one parameter):
 	ajaxURL: './?ajax=true',
@@ -22,7 +22,7 @@ var ajaxChatConfig = {
 	regExpMediaUrl: '^((http)|(https)):\\/\\/',
 
 	// If set to false the chat update is delayed until the event defined in ajaxChat.setStartChatHandler():
-	startChatOnLoad: false,
+	startChatOnLoad: true,
 
 	// Defines the IDs of DOM nodes accessed by the chat:
 	domIDs: {
@@ -239,11 +239,11 @@ var ajaxChatConfig = {
 	// UserID plus this value are used for private messages:
 	privateMessageDiff: 1000000000,
 	// Defines if login/logout and channel enter/leave are displayed:
-	showChannelMessages: false,
+	showChannelMessages: true,
 	// Max messageText length:
 	messageTextMaxLength: 1040,
 	// Defines if the socket server is enabled:
-	socketServerEnabled: true,
+	socketServerEnabled: false,
 	// Defines the hostname of the socket server used to connect from client side:
 	socketServerHost: 'localhost',
 	// Defines the port of the socket server:
@@ -252,5 +252,5 @@ var ajaxChatConfig = {
 	socketServerChatID: 0,
 
 	// Debug allows console logging or alerts on caught errors - false/0 = no debug, true/1/2 = console log, 2 = alerts
-	debug: true
+	debug: false
 };
