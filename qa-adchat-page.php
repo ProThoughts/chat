@@ -36,7 +36,7 @@ class qa_adchat_page{
 		$qa_content=qa_content_prepare(true);
                         $qa_content['title']=qa_opt('site_title').' Chat';
 
-                        $qa_content['custom']= '<iframe src="/qa-plugin/'.$this->urltoroot.'chat"  width="100%" height="800"></iframe>';
+                        $qa_content['custom']= '<iframe src="'.$this->urltoroot.'chat"  width="100%" height="800"></iframe>';
 		$qa_content['custom_2']='<script type="text/javascript"> $( document ).ready(function() {  $("#adchat").hide();   createCookieAdChat("none");}); </script>';
 
 

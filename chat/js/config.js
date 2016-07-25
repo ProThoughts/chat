@@ -22,7 +22,7 @@ var ajaxChatConfig = {
 	regExpMediaUrl: '^((http)|(https)):\\/\\/',
 
 	// If set to false the chat update is delayed until the event defined in ajaxChat.setStartChatHandler():
-	startChatOnLoad: true,
+	startChatOnLoad: false,
 
 	// Defines the IDs of DOM nodes accessed by the chat:
 	domIDs: {
