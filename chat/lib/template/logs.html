@@ -116,7 +116,9 @@
 		<!--[if lt IE 7]>
 			<div></div>
 		<![endif]-->
+		<div id="mainPanelContainer"> 
 		<div id="chatList"></div>
+		</div>
 		<div id="inputFieldContainer">
 			<textarea id="inputField" rows="1" cols="50" title="[LANG]inputLineBreak[/LANG]" onkeypress="ajaxChat.handleInputFieldKeyPress(event);"></textarea>
 		</div>
@@ -124,11 +126,10 @@
 			<input type="button" id="submitButton" value="[LANG]logsSearch[/LANG]" onclick="ajaxChat.sendMessage();"/>
 		</div>
 		<div id="optionsContainer">
-			<input type="image" src="img/pixel.gif" class="button" id="settingsButton" alt="[LANG]toggleSettings[/LANG]" title="[LANG]toggleSettings[/LANG]" onclick="toggleContainer('settingsContainer');"/>
 			<input type="image" src="img/pixel.gif" class="button" id="audioButton" alt="[LANG]toggleAudio[/LANG]" title="[LANG]toggleAudio[/LANG]" onclick="ajaxChat.toggleSetting('audio', 'audioButton');"/>
 			<input type="image" src="img/pixel.gif" class="button" id="autoScrollButton" alt="[LANG]toggleAutoScroll[/LANG]" title="[LANG]toggleAutoScroll[/LANG]" onclick="ajaxChat.toggleSetting('autoScroll', 'autoScrollButton')"/>
   		</div>
-	  	<div id="settingsContainer" style="display:none;">
+	  	<div id="settingsContainer" style="display:block;">
  			<h3>[LANG]settings[/LANG]</h3>
  			<div id="settingsList">
 				<table>
