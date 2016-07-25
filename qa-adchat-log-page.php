@@ -36,7 +36,7 @@ class qa_adchat_log_page{
 		$qa_content=qa_content_prepare(true);
                         $qa_content['title']=qa_opt('site_title').' Chat Logs';
 
-                        $qa_content['custom']= '<iframe src="'.$this->urltoroot.'chat/?view=logs"  width="100%" height="400"></iframe>';
+                        $qa_content['custom']= '<iframe src="'.$this->urltoroot.'chat/?view=logs"  width="100%" height="600"></iframe>';
 			$qa_content['custom_2']='<script type="text/javascript"> $( document ).ready(function() {  $("#settingsContainer").hide(); }); </script>';
 
 
