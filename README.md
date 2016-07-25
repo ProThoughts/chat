@@ -7,14 +7,18 @@ Requires AJAX chat to be installed in the chat folder of this plugin- just set u
 In summary 
 
 git clone https://github.com/arjunsuresh/chat.git adchat
-set the database access values in chat/lib/config.php.example and then rename it to config.php
+
+Set the database access values in chat/lib/config.php.example and then rename it to config.php.
+
 Then load "qa-plugin/adchat/chat/install.php" from the browser after prepending with the Q2A url.
-Delete install.php - Running this again causes the chat database to be deleted
+
+Delete install.php - Running this again causes the chat database to be deleted.
 
 
 Now, 
 
-Go to "/admin/layout" and you can create a sidebar widget for chat 
+Go to "/admin/layout" and you can create a sidebar widget for chat. 
+
 Also, in "/admin/pages" new pages can be created for full page chat as well as chat logs (chat logs can be searched)
 
 
