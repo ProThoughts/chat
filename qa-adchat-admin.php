@@ -13,6 +13,7 @@
 					return '
 button#adchattoggle {
 	margin-bottom: 10px;
+	background-color: #4c9ed9!important;
 }';
 			}
 			
