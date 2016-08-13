@@ -29,7 +29,7 @@ class qa_adchat_widget {
 			$out='
 
 
-			<button id="adchattoggle" class="adchattoggle btn btn-info btn-lg btn-block">Show/Hide Chat </button>';
+			<button id="adchattoggle" class="adchattoggle">Show/Hide Chat </button>';
 			$out.='<div class="adchat" id="adchat" style="display:';
 			 if(@$_COOKIE['showadchat'] == 'block')
 				$out.="block";
