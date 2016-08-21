@@ -40,7 +40,7 @@ class qa_adchat_widget {
 			$out .='">';
 			$out.='
 	
-				<iframe src="'.$this->urltoroot.'/chat" style="border:0; width:100%; height:480px;"></iframe>
+				<iframe src="'.$this->urltoroot.'chat" style="border:0; width:100%; height:480px;"></iframe>
 				 </div>';
 
 		}
