@@ -412,7 +412,7 @@ var ajaxChat = {
 
 	startChatUpdate: function() {
 		// Start the chat update and retrieve current user and channel info and set the login channel:
-		var infos = 'userID,userName,userRole,channelID,channelName';
+		var infos = 'userID,userName,userRole,avatar,channelID,channelName';//Q2A
 		if(this.socketServerEnabled) {
 			infos += ',socketRegistrationID';
 		}
@@ -915,6 +915,9 @@ var ajaxChat = {
 				break;
 			case 'userRole':
 				this.userRole = infoData;
+				break;
+			case 'avatar':
+				this.avatar = avatar;
 				break;
 			case 'logout':
 				this.handleLogout(infoData);

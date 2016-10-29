@@ -47,16 +47,18 @@ class CustomAJAXChat extends AJAXChat {
 		// Check if we have a valid registered user:
 		if(!(qa_get_logged_in_userid()===null)) {
 			$userData = array();
-			$userData['userID'] = qa_get_logged_in_userid();
+			$userId = qa_get_logged_in_userid();
+			$userData['userID'] = $userId;
 			$userData['userName'] = $this->trimUserName(qa_get_logged_in_handle());
 
-			if(qa_get_logged_in_level() == QA_USER_LEVEL_SUPER || qa_get_logged_in_level() == QA_USER_LEVEL_ADMIN || qa_get_logged_in_level() == QA_USER_LEVEL_MODERATOR)
+			if(qa_get_logged_in_level() >= QA_USER_LEVEL_MODERATOR)
 				$userData['userRole'] = AJAX_CHAT_ADMIN;
 			elseif(qa_get_logged_in_level() == QA_USER_LEVEL_EDITOR)
 				$userData['userRole'] = AJAX_CHAT_MODERATOR;
 			else
 				$userData['userRole'] = AJAX_CHAT_USER;
-
+			$user = qa_db_select_with_pending( qa_db_user_account_selectspec($userId, true) );
+			$userData['avatar'] = qa_get_user_avatar_html($user['flags'], $user['email'], $user['handle'], $user['avatarblobid'], $user['avatarwidth'], $user['avatarheight'], qa_opt('avatar_users_size'), true);
 			return $userData;
 
 		} else {
@@ -166,15 +168,34 @@ function &getCustomUsers() {
 	return $users;
 }
 //for Q2A
+function getAllCategoriesSelectSpec()
+{
+	return array(
+			'columns' =>  array('^categories.categoryid', '^categories.parentid', 'title' => '^categories.title', 'tags' => '^categories.tags', '^categories.qcount', '^categories.position',   'content'=>'^categories.content', 'backpath'=>'^categories.backpath',
+),
+			'source' => '^categories',
+			'arguments' => '',
+			'arraykey' => 'categoryid',
+			'sortasc' => 'position',
+		    );
+
+}
 function getCustomChannels() {
 	// List containing the custom channels:
 	$channels = array();
 	//$channels = getCustomChannelsId();
 	//Q2A Categories list
-	$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
+	if(qa_opt('adchat-expand-categories')){
+		$q2a_categories=qa_db_select_with_pending( $this->getAllCategoriesSelectSpec() );
+	}
+	else
+	{
+		$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
+	}
 	foreach ($q2a_categories as $catID => $catDet) {
 		$channels[$catID] = $catDet["tags"];
 	}
+
 
 	// ChannelName => ChannelID
 	return array_flip($channels);
@@ -183,10 +204,17 @@ function getCustomChannels() {
 function getCustomChannelsId() {
 	// List containing the custom channels:
 	$channels = array();
-	$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
-	foreach ($q2a_categories as $catID => $catDet) {
+	if(qa_opt('adchat-expand-categories')){
+		$q2a_categories=qa_db_select_with_pending($this->getAllCategoriesSelectSpec());
+	}
+
+	else{
+		$q2a_categories=qa_db_select_with_pending( qa_db_category_nav_selectspec(false, false, false, true) );
+
+	}foreach ($q2a_categories as $catID => $catDet) {
 		$channels[] = $catID;
 	}
+
 	// Channel array structure should be:
 	// ChannelName => ChannelID
 	return $channels;

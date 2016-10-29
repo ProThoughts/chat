@@ -17,6 +17,8 @@ button#adchattoggle {
 	color:white;
 	float:right;
 }';
+			case 'adchat-expand-categories': 
+				return '0';
 			}
 			
 		}
@@ -32,8 +34,10 @@ button#adchattoggle {
 			if (qa_clicked('adchat_save_button')) {
 				
 				qa_opt('adchat_plugin_css',qa_post_text('adchat_plugin_css'));
-				qa_opt('adchat_plugin_widget_only',(bool)qa_post_text('adchat_plugin_widget_only'));
-				
+				if(qa_post_text('adchat-expand-categories') == 1)
+				qa_opt('adchat-expand-categories',"1");
+				else
+				qa_opt('adchat-expand-categories',"0");
 				
 				$ok = qa_lang('admin/options_saved');
 			}
@@ -61,15 +65,15 @@ button#adchattoggle {
 				'type' => 'textarea',
 				'rows' => 20
 			);
+			$fields[] = array(
+				'label' => 'Make all categories into chat room',
+				'note' => 'Otherwise only top level categories are made to chat room',
+				'tags' => 'NAME="adchat-expand-categories"',
+				'value' => qa_opt('adchat-expand-categories'),
+				'type' => 'checkbox',
+			);
 									
 
-			$fields[] = array(
-				'type' => 'blank',
-			);			
-
-			$fields[] = array(
-				'type' => 'blank',
-			);			
 						
 			return array(
 				'ok' => ($ok && !isset($error)) ? $ok : null,

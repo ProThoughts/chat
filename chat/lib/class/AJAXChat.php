@@ -62,6 +62,7 @@ class AJAXChat {
 		$this->_requestVars['ajax']			= isset($_REQUEST['ajax'])			? true							: false;
 		$this->_requestVars['userID']		= isset($_REQUEST['userID'])		? (int)$_REQUEST['userID']		: null;
 		$this->_requestVars['userName']		= isset($_REQUEST['userName'])		? $_REQUEST['userName']			: null;
+		$this->_requestVars['avatar']		= isset($_REQUEST['avatar'])		? $_REQUEST['avatar']			: null;//Q2A
 		$this->_requestVars['channelID']	= isset($_REQUEST['channelID'])		? (int)$_REQUEST['channelID']	: null;
 		$this->_requestVars['channelName']	= isset($_REQUEST['channelName'])	? $_REQUEST['channelName']		: null;
 		$this->_requestVars['text']			= isset($_POST['text'])				? $_POST['text']				: null;
@@ -2646,6 +2647,9 @@ class AJAXChat {
 	
 	function getUserID() {
 		return $this->getSessionVar('UserID');
+	}
+	function getUserAvatar() {
+		return $this->getSessionVar('avatar');
 	}
 	
 	function setUserID($id) {
