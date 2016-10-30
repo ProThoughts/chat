@@ -2052,8 +2052,9 @@ class AJAXChat {
 		// Add the messages in reverse order so it is ascending again:
 		while($row = $result->fetch()) {			
 		 $user = qa_db_select_with_pending( qa_db_user_account_selectspec($row['userID'], true) );
-                 $avatar = qa_get_user_avatar_html($user['flags'], $user['email'], $user['handle'], $user['avatarblobid'], $user['avatarwidth'], $user['avatarheight'], qa_opt('avatar_users_size'), true);
-		$avatar = str_replace('src="', 'src="'.qa_opt(site_url), $avatar);
+                 $avatar = qa_get_user_avatar_html($user['flags'], $user['email'], $user['handle'], $user['avatarblobid'], 25, 25, 25, true);
+//$user['avatarwidth'], $user['avatarheight'], qa_opt('avatar_users_size'), true);
+		$avatar = str_replace('src="', 'src="'.qa_opt("site_url"), $avatar);
 			$message = $this->getChatViewMessageXML(
 				$row['id'],
 				$row['timeStamp'],

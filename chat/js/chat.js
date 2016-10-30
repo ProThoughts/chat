@@ -409,11 +409,6 @@ var ajaxChat = {
  			this.DOMbuffer = "";
 		}
 	},
-htmlDecode: function (input)
-{
-  var doc = new DOMParser().parseFromString(input, "text/html");
-  return doc.documentElement.textContent;
-},
 
 	startChatUpdate: function() {
 		// Start the chat update and retrieve current user and channel info and set the login channel:
@@ -922,7 +917,7 @@ htmlDecode: function (input)
 				this.userRole = infoData;
 				break;
 			case 'avatar':
-				this.avatar = infoData;
+				//this.avatar = infoData;
 			//	this.avatar = this.scriptLinkEncode(this.avatar);
                                 this.userAvatarString = null;
 				break;
@@ -981,9 +976,11 @@ htmlDecode: function (input)
 				userName = userNode.firstChild ? userNode.firstChild.nodeValue : '';
 				avatarNode = messageNodes[i].getElementsByTagName('avatar')[0];
 				avatar = avatarNode.firstChild ? avatarNode.firstChild.nodeValue : '';
+				//avatar = avatarNode.innerHTML;//firstChild ? avatarNode.firstChild.nodeValue : '';
 				textNode = messageNodes[i].getElementsByTagName('text')[0];
 				messageText = textNode.firstChild ? textNode.firstChild.nodeValue : '';
 				if (i === (messageNodes.length - 1)) {this.DOMbuffering = false;}
+				avatar = this.decodeSpecialChars(avatar);
 				this.addMessageToChatList(
 						new Date(messageNodes[i].getAttribute('dateTime')),
 						messageNodes[i].getAttribute('userID'),
@@ -993,9 +990,7 @@ htmlDecode: function (input)
 						messageText,
 						messageNodes[i].getAttribute('channelID'),
 						messageNodes[i].getAttribute('ip'),
-						//decodeURIComponent(avatar)
-						//this.scriptLinkEncode(avatar)
-						this.htmlDecode(avatar)
+						avatar
 				);
 			}
 			this.DOMbuffering = false;
