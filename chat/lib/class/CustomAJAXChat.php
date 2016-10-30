@@ -176,7 +176,7 @@ function getAllCategoriesSelectSpec()
 			'source' => '^categories',
 			'arguments' => '',
 			'arraykey' => 'categoryid',
-			'sortasc' => 'position',
+			'sortasc' => 'title',
 		    );
 
 }
