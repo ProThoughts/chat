@@ -65,6 +65,7 @@ var ajaxChat = {
 	socketRegistrationID: null,
 	userID: null,
 	userName: null,
+	avatar: null,
 	userRole: null,
 	channelID: null,
 	channelName: null,
@@ -408,7 +409,11 @@ var ajaxChat = {
  			this.DOMbuffer = "";
 		}
 	},
-
+htmlDecode: function (input)
+{
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+},
 
 	startChatUpdate: function() {
 		// Start the chat update and retrieve current user and channel info and set the login channel:
@@ -917,7 +922,9 @@ var ajaxChat = {
 				this.userRole = infoData;
 				break;
 			case 'avatar':
-				this.avatar = avatar;
+				this.avatar = infoData;
+			//	this.avatar = this.scriptLinkEncode(this.avatar);
+                                this.userAvatarString = null;
 				break;
 			case 'logout':
 				this.handleLogout(infoData);
@@ -972,6 +979,8 @@ var ajaxChat = {
 				this.DOMbuffering = true;
 				userNode = messageNodes[i].getElementsByTagName('username')[0];
 				userName = userNode.firstChild ? userNode.firstChild.nodeValue : '';
+				avatarNode = messageNodes[i].getElementsByTagName('avatar')[0];
+				avatar = avatarNode.firstChild ? avatarNode.firstChild.nodeValue : '';
 				textNode = messageNodes[i].getElementsByTagName('text')[0];
 				messageText = textNode.firstChild ? textNode.firstChild.nodeValue : '';
 				if (i === (messageNodes.length - 1)) {this.DOMbuffering = false;}
@@ -983,7 +992,10 @@ var ajaxChat = {
 						messageNodes[i].getAttribute('id'),
 						messageText,
 						messageNodes[i].getAttribute('channelID'),
-						messageNodes[i].getAttribute('ip')
+						messageNodes[i].getAttribute('ip'),
+						//decodeURIComponent(avatar)
+						//this.scriptLinkEncode(avatar)
+						this.htmlDecode(avatar)
 				);
 			}
 			this.DOMbuffering = false;
@@ -1234,7 +1246,7 @@ var ajaxChat = {
 		);
 	},
 
-	addMessageToChatList: function(dateObject, userID, userName, userRole, messageID, messageText, channelID, ip) {
+	addMessageToChatList: function(dateObject, userID, userName, userRole, messageID, messageText, channelID, ip, avatar) {
 		// Prevent adding the same message twice:
 		if(this.getMessageNode(messageID)) {
 			return;
@@ -1245,7 +1257,7 @@ var ajaxChat = {
 		this.DOMbufferRowClass = this.DOMbufferRowClass === 'rowEven' ? 'rowOdd' : 'rowEven';
 		this.DOMbuffer = this.DOMbuffer +
 			this.getChatListMessageString(
-				dateObject, userID, userName, userRole, messageID, messageText, channelID, ip
+				dateObject, userID, userName, userRole, messageID, messageText, channelID, ip, avatar
 			);
 		if(!this.DOMbuffering){
  			this.updateDOM('chatList', this.DOMbuffer);
@@ -1253,7 +1265,7 @@ var ajaxChat = {
  		}
 	},
 
-	getChatListMessageString: function(dateObject, userID, userName, userRole, messageID, messageText, channelID, ip) {
+	getChatListMessageString: function(dateObject, userID, userName, userRole, messageID, messageText, channelID, ip, avatar) {
 		var rowClass = this.DOMbufferRowClass,
 			userClass = this.getRoleClass(userRole),
 			colon = ': ';
@@ -1267,13 +1279,15 @@ var ajaxChat = {
 
 		var dateTime = this.settings['dateFormat'] ? '<span class="dateTime">'
 						+ this.formatDate(this.settings['dateFormat'], dateObject) + '</span> ' : '';
-		return	'<div id="'
+		
+return	'<div id="'
 				+ this.getMessageDocumentID(messageID)
 				+ '" class="'
 				+ rowClass
 				+ '">'
 				+ this.getDeletionLink(messageID, userID, userRole, channelID)
 				+ dateTime
+				+ avatar
 				+ '<span class="'
 				+ userClass
 				+ '"'
@@ -1281,7 +1295,7 @@ var ajaxChat = {
 				+ ' dir="'
 				+ this.baseDirection
 				+ '" onclick="ajaxChat.insertText(this.firstChild.nodeValue);">'
-				+ userName
+				+  userName
 				+ '</span>'
 				+ colon
 				+ this.replaceText(messageText)

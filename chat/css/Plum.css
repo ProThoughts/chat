@@ -5,8 +5,7 @@
 @import url('global.css');
 @import url('fonts.css');
 @import url('print.css');
-@import url('custom.css');
-
+@import url('custom.css?v=1.1');
 .ajax-chat {
 	background-color:#2A112F;
 	color:#9765A0;

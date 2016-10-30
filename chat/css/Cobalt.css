@@ -9,8 +9,7 @@
 @import url('global.css');
 @import url('fonts.css');
 @import url('print.css');
-@import url('custom.css');
-
+@import url('custom.css?v=1.1');
 /* Buttons */
 #content #bbCodeContainer input, #content #logoutButton, #content #submitButton, #loginForm #loginButton {
 	background-color:#1a1a1a;

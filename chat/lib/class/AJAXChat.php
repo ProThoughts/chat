@@ -62,7 +62,9 @@ class AJAXChat {
 		$this->_requestVars['ajax']			= isset($_REQUEST['ajax'])			? true							: false;
 		$this->_requestVars['userID']		= isset($_REQUEST['userID'])		? (int)$_REQUEST['userID']		: null;
 		$this->_requestVars['userName']		= isset($_REQUEST['userName'])		? $_REQUEST['userName']			: null;
-		$this->_requestVars['avatar']		= isset($_REQUEST['avatar'])		? $_REQUEST['avatar']			: null;//Q2A
+		$this->_requestVars['avatar']		= isset($_REQUEST['userName'])          ? $_REQUEST['userName']                 : null;
+
+//= isset($_REQUEST['avatar'])		? $_REQUEST['avatar']			: null;//Q2A
 		$this->_requestVars['channelID']	= isset($_REQUEST['channelID'])		? (int)$_REQUEST['channelID']	: null;
 		$this->_requestVars['channelName']	= isset($_REQUEST['channelName'])	? $_REQUEST['channelName']		: null;
 		$this->_requestVars['text']			= isset($_POST['text'])				? $_POST['text']				: null;
@@ -1546,7 +1548,8 @@ class AJAXChat {
 		$userRole,
 		$channelID,
 		$text,
-		$mode	
+		$mode,
+		$avatar = null	
 		) {
 		// The $mode parameter:
 		// 0 = normal messages
@@ -1567,6 +1570,7 @@ class AJAXChat {
 				$userID,
 				$userName,
 				$userRole,
+				$avatar,
 				$channelID,
 				$text
 			);
@@ -1995,7 +1999,8 @@ class AJAXChat {
 		$userName,
 		$userRole,
 		$channelID,
-		$text
+		$text,
+		$avatar=null
 		) {
 		$message = '<message';
 		$message .= ' id="'.$messageID.'"';
@@ -2005,10 +2010,12 @@ class AJAXChat {
 		$message .= ' channelID="'.$channelID.'"';
 		$message .= '>';
 		$message .= '<username><![CDATA['.$this->encodeSpecialChars($userName).']]></username>';
+		$message .= '<avatar><![CDATA['.$this->encodeSpecialChars($avatar).']]></avatar>';
 		$message .= '<text><![CDATA['.$this->encodeSpecialChars($text).']]></text>';
 		$message .= '</message>';
 		return $message;
 	}
+	
 
 	function getChatViewMessagesXML() {
 		// Get the last messages in descending order (this optimises the LIMIT usage):
@@ -2040,9 +2047,14 @@ class AJAXChat {
 		}
 		
 		$messages = '';
-		
+	
+
+               	
 		// Add the messages in reverse order so it is ascending again:
 		while($row = $result->fetch()) {			
+		 $user = qa_db_select_with_pending( qa_db_user_account_selectspec($row['id'], true) );
+                 $avatar = qa_get_user_avatar_html($user['flags'], $user['email'], $user['handle'], $user['avatarblobid'], $user['avatarwidth'], $user['avatarheight'], qa_opt('avatar_users_size'), true);
+		$avatar = str_replace("src=", "src=".qa_opt(site_url), $avatar);
 			$message = $this->getChatViewMessageXML(
 				$row['id'],
 				$row['timeStamp'],
@@ -2050,7 +2062,8 @@ class AJAXChat {
 				$row['userName'],
 				$row['userRole'],
 				$row['channelID'],
-				$row['text']
+				$row['text'],
+				$avatar
 			);		
 			$messages = $message.$messages;
 		}

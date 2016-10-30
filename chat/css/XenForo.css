@@ -5,8 +5,7 @@
 @import url('global.css');
 @import url('fonts.css');
 @import url('print.css');
-@import url('custom.css');
-
+@import url('custom.css?v=1.1');
 /* Main Buttons */
 #content #logoutButton,#content #submitButton,#loginForm #loginButton {
 	font: 12pt Calibri, 'Trebuchet MS', Verdana, Geneva, Arial, Helvetica, sans-serif;
