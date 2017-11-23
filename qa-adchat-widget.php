@@ -24,7 +24,7 @@ class qa_adchat_widget {
 	{
 		$out='';
 		require_once QA_INCLUDE_DIR.'qa-app-users.php';
-		if(qa_is_logged_in())
+		if(qa_is_logged_in())// || qa_opt('adchat_adcode') === '')
 		{
 			$out='
 
@@ -45,15 +45,7 @@ class qa_adchat_widget {
 
 		}
 		else {
-			$out='<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-				<ins class="adsbygoogle"
-				style="display:block"
-				data-ad-client="'.qa_html(qa_opt("adsense_publisher_id")).'"
-				data-ad-slot="'.qa_html(qa_opt("adsense_adunit_id")).'"
-				data-ad-format="auto"></ins>
-				<script>
-				(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>';
+			$out=qa_opt('adchat_adcode');
 		}			
 		$output = '<div class="adchat-widget-container">'.$out.'</div>';
 

@@ -1,6 +1,6 @@
 # Adchat
 Question2answer chat
-Shows <a href="https://github.com/Frug/AJAX-Chat">AJAX Chat</a> for logged in users and Google Ad for others.
+Shows <a href="https://github.com/Frug/AJAX-Chat">AJAX Chat</a> for logged in users and option to have Ad for others.
 AJAX chat uses the login of Q2A and by default has a separate chat room per Q2A category.
 Requires AJAX chat to be installed in the chat folder of this plugin (included here)- just set up the chat database. Instructions can be seen <a href="chat/readme.html">here</a>
 
