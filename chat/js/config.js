@@ -11,7 +11,7 @@ var ajaxChatConfig = {
 	loginChannelName: null,
 
 	// The time in ms between update calls to retrieve new chat messages:
-	timerRate: 10000,
+	timerRate: 5000,
 
 	// The URL to retrieve the XML chat messages (must at least contain one parameter):
 	ajaxURL: './?ajax=true',
@@ -22,7 +22,7 @@ var ajaxChatConfig = {
 	regExpMediaUrl: '^((http)|(https)):\\/\\/',
 
 	// If set to false the chat update is delayed until the event defined in ajaxChat.setStartChatHandler():
-	startChatOnLoad: true,
+	startChatOnLoad: false,
 
 	// Defines the IDs of DOM nodes accessed by the chat:
 	domIDs: {

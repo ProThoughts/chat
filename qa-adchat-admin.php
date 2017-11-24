@@ -16,7 +16,14 @@ button#adchattoggle {
 	background-color: #4c9ed9!important;
 	color:white;
 	float:right;
-}';
+}
+.adchat-widget-container {
+display: inline-block;
+height:360px;
+width:240px;
+}
+';
+			case 'adchat_adcode': return '';
 			case 'adchat-expand-categories': 
 				return '0';
 			}
@@ -34,6 +41,7 @@ button#adchattoggle {
 			if (qa_clicked('adchat_save_button')) {
 				
 				qa_opt('adchat_plugin_css',qa_post_text('adchat_plugin_css'));
+				qa_opt('adchat_adcode',qa_post_text('adchat_adcode'));
 				if(qa_post_text('adchat-expand-categories') == 1)
 				qa_opt('adchat-expand-categories',"1");
 				else
@@ -62,6 +70,13 @@ button#adchattoggle {
 				'label' => 'Adchat custom css',
 				'tags' => 'NAME="adchat_plugin_css"',
 				'value' => qa_opt('adchat_plugin_css'),
+				'type' => 'textarea',
+				'rows' => 20
+			);
+			$fields[] = array(
+				'label' => 'Adchat Code to show for non-logged users',
+				'tags' => 'NAME="adchat_adcode"',
+				'value' => qa_opt('adchat_adcode'),
 				'type' => 'textarea',
 				'rows' => 20
 			);

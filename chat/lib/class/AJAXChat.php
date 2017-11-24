@@ -317,7 +317,6 @@ class AJAXChat {
 
 		// Send HTTP header:
 		$httpHeader->send();		
-
 		// Send parsed template content:
 		echo $template->getParsedContent();
 	}
